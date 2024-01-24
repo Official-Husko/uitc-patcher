@@ -49,7 +49,7 @@ db    db d888888b d888888b  .o88b.        d8888b.  .d8b.  d888888b  .o88b. db   
     static void PrintColoredText()
     {
         Console.ForegroundColor = ConsoleColor.Cyan; // Set color to cyan
-        Console.Write("                                                                         v1.0.0");
+        Console.Write("                                                                         v1.0.1");
         Console.ResetColor(); // Reset color to default
         Console.Write(" | by ");
         Console.ForegroundColor = ConsoleColor.Yellow; // Set color to yellow
@@ -60,7 +60,8 @@ db    db d888888b d888888b  .o88b.        d8888b.  .d8b.  d888888b  .o88b. db   
     
     static string AskForGamePath()
     {
-        Console.Write("Enter the path to the game exe (e.g. C:\\Users\\paw_beans\\Downloads\\UiTC v33a EX Win 64 Bit): ");
+        Console.WriteLine("Make sure to point it to your data folder! (e.g. C:\\Users\\paw_beans\\Downloads\\UiTC_v33b_EX_Win_64_Bit\\UiTC_v33b_EX_Win_64_Bit_Data)");
+        Console.Write("Enter the path to the game data folder: ");
         string gamePath = Console.ReadLine();
 
         // Remove any trailing slashes or backslashes
@@ -80,8 +81,8 @@ db    db d888888b d888888b  .o88b.        d8888b.  .d8b.  d888888b  .o88b. db   
     static void ModifyAssembly(string gamePath)
     {
         // Construct paths for the DLL and its backup
-        string dllPath = Path.Combine(gamePath, @"Unaware in The City_Data\Managed\Assembly-CSharp.dll");
-        string backupFilePath = Path.Combine(gamePath, @"Unaware in The City_Data\Managed\Assembly-CSharp-Backup.dll");
+        string dllPath = Path.Combine(gamePath, @"Managed\Assembly-CSharp.dll");
+        string backupFilePath = Path.Combine(gamePath, @"Managed\Assembly-CSharp-Backup.dll");
 
         // Load the assembly
         ModuleDefMD module = ModuleDefMD.Load(dllPath);
@@ -190,7 +191,7 @@ db    db d888888b d888888b  .o88b.        d8888b.  .d8b.  d888888b  .o88b. db   
                     }
                     else
                     {
-                        Console.WriteLine($"Field '{fieldName}' not found in the type.");
+                        Console.WriteLine($"Field '{fieldName}' not found. The Game Dev removed it.");
                     }
                 }
 
@@ -264,7 +265,7 @@ db    db d888888b d888888b  .o88b.        d8888b.  .d8b.  d888888b  .o88b. db   
             }
             else
             {
-                Console.WriteLine("No YouTube links available. :()");
+                Console.WriteLine("No YouTube links available. :(");
             }
         }
         catch (Exception ex)
@@ -279,11 +280,15 @@ db    db d888888b d888888b  .o88b.        d8888b.  .d8b.  d888888b  .o88b. db   
         {
             string logFilePath = Path.Combine(directory, "runtime.log");
             File.WriteAllText(logFilePath, $"Exception: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            Console.WriteLine($"An error occurred. Details logged in {logFilePath}");
+            Console.WriteLine($"An error occurred. Details logged in {logFilePath}. Please Report this!");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
         }
         catch
         {
-            Console.WriteLine("An error occurred, and failed to log details.");
+            Console.WriteLine("An error occurred, and failed to log details. Please Report this!");
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadKey();
         }
     }
 
